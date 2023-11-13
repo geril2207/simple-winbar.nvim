@@ -22,15 +22,16 @@ end
 local get_filename_line = function()
 	local result = ""
 	local filename = fn.expand("%:t")
-	local filetype = fn.expand("%:e")
+	local filetype = vim.bo.filetype or ""
 
 	if not filename or filename == "" then
 		return result
 	end
 
 	if filetype and filetype ~= "" and status_web_devicons_ok then
-		local file_icon = web_devicons.get_icon(filename, filetype, { default = false })
-		result = result .. "%#DevIcon" .. filetype .. "#" .. file_icon .. " %*"
+		local default = filetype and false or true
+		local file_icon = web_devicons.get_icon_by_filetype(filetype, { default = default })
+		result = result .. wrap_with_hl(file_icon .. " ", "DevIcon" .. filetype)
 	end
 
 	result = result .. wrap_with_hl(filename, hl_groups.filename)
