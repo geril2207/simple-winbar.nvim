@@ -30,8 +30,8 @@ local get_filename_line = function()
 
 	if filetype and filetype ~= "" and status_web_devicons_ok then
 		local default = filetype and false or true
-		local file_icon = web_devicons.get_icon_by_filetype(filetype, { default = default })
-		result = result .. wrap_with_hl(file_icon .. " ", "DevIcon" .. filetype)
+		local file_icon, hl_name = web_devicons.get_icon_by_filetype(filetype, { default = default })
+		result = result .. wrap_with_hl(file_icon .. " ", hl_name or ("DevIcon" .. filetype))
 	end
 
 	result = result .. wrap_with_hl(filename, hl_groups.filename)
