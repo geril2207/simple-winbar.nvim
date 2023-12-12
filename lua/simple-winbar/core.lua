@@ -66,12 +66,13 @@ end
 
 local combine_winbar_line = function()
 	local result = ""
+	local left_spacing = ""
 
 	if config.left_spacing then
 		if type(config.left_spacing) == "string" then
-			result = result .. config.left_spacing
+			left_spacing = config.left_spacing
 		elseif type(config.left_spacing) == "function" then
-			result = result .. config.left_spacing()
+			left_spacing = config.left_spacing()
 		end
 	end
 
@@ -81,7 +82,11 @@ local combine_winbar_line = function()
 
 	result = result .. get_filename_line()
 
-	return result
+	if result == "" then
+		return result
+	end
+
+	return left_spacing .. result
 end
 
 M.attach_aucmd = function()
